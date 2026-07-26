@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GioTV Emergency Alert Repository</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#eae6dd;
+    --ink-dim:#9a978f;
+    --bg:#0c0d0b;
+    --bg-panel:#141511;
+    --bg-panel-2:#1a1b16;
+    --line: #2c2d26;
+    --amber:#ffb020;
+    --amber-dim:#8a5f10;
+    --red:#e2231a;
+    --red-dim:#4a1310;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    background-image:
+      radial-gradient(ellipse at top, rgba(255,176,32,0.05), transparent 60%);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--amber);color:#000;}
+
+  a{color:var(--amber);}
+
+  header.masthead{
+    border-bottom:1px solid var(--line);
+    padding:2.6rem 1.5rem 1.6rem;
+    text-align:center;
+    position:relative;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.28em;
+    color:var(--amber);
+    text-transform:uppercase;
+    margin-bottom:0.9rem;
+  }
+  .eyebrow::before{content:"● ";color:var(--red);}
+  h1.title{
+    font-family:'Oswald',sans-serif;
+    font-weight:700;
+    font-size:clamp(2rem, 6vw, 3.6rem);
+    letter-spacing:0.01em;
+    margin:0;
+    line-height:1.02;
+    text-transform:uppercase;
+  }
+  h1.title span{color:var(--amber);}
+  .sub{
+    font-family:'IBM Plex Mono',monospace;
+    color:var(--ink-dim);
+    font-size:0.85rem;
+    margin-top:0.9rem;
+    letter-spacing:0.02em;
+  }
+
+
+  main{
+    max-width:840px;
+    margin:0 auto;
+    padding:2.4rem 1.5rem 5rem;
+  }
+
+  .archive-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.75rem;
+    color:var(--ink-dim);
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    border-bottom:1px solid var(--line);
+    padding-bottom:0.8rem;
+    margin-bottom:2rem;
+    display:flex;
+    justify-content:space-between;
+  }
+
+  .alert-card{
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    border-radius:2px;
+    position:relative;
+    margin-bottom:2rem;
+    overflow:hidden;
+  }
+  .alert-card::before{
+    content:"";
+    position:absolute;
+    left:0; top:0; bottom:0;
+    width:4px;
+    background:var(--red);
+  }
+  .alert-card.storm::before{
+    background:#2f6f8a;
+  }
+  .status-note{
+    margin:0 1.7rem;
+    margin-top:1rem;
+    padding:0.6rem 0.9rem;
+    background:#242017;
+    border:1px solid var(--amber-dim);
+    border-radius:2px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.74rem;
+    color:var(--amber);
+    letter-spacing:0.02em;
+  }
+  .alert-head{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:1rem;
+    padding:1.4rem 1.5rem 1.1rem 1.7rem;
+    border-bottom:1px solid var(--line);
+    flex-wrap:wrap;
+  }
+  .alert-num{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.78rem;
+    color:var(--ink-dim);
+    letter-spacing:0.1em;
+  }
+  .alert-num b{color:var(--amber);font-size:1rem;}
+  .badge{
+    display:inline-block;
+    background:var(--red-dim);
+    color:#ff8b83;
+    border:1px solid #6b201a;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.7rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    padding:0.28rem 0.6rem;
+    border-radius:2px;
+  }
+  .badge.muted{
+    background:#2a2a24;
+    color:var(--amber);
+    border:1px solid var(--amber-dim);
+  }
+  .badge.storm{
+    background:#182a33;
+    color:#7fd3ff;
+    border:1px solid #234a58;
+  }
+  .alert-title{
+    font-family:'Oswald',sans-serif;
+    font-size:1.5rem;
+    text-transform:uppercase;
+    margin:0.5rem 0 0;
+    letter-spacing:0.01em;
+  }
+
+  .meta-row{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    gap:0.8rem 1.4rem;
+    padding:1.1rem 1.7rem;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.8rem;
+    color:var(--ink-dim);
+    border-bottom:1px solid var(--line);
+  }
+  .meta-row dt{
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    font-size:0.65rem;
+    color:#6b6a63;
+    margin-bottom:0.2rem;
+  }
+  .meta-row dd{margin:0;color:var(--ink);}
+
+  .video-block{
+    padding:1.5rem 1.7rem 0.6rem;
+  }
+  .video-block video{
+    width:100%;
+    display:block;
+    background:#000;
+    border:1px solid var(--line);
+    border-radius:2px;
+  }
+  .video-caption{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.72rem;
+    color:var(--ink-dim);
+    margin-top:0.5rem;
+  }
+
+  details.transcript{
+    margin:1.1rem 1.7rem 1.6rem;
+    border-top:1px dashed var(--line);
+    padding-top:1rem;
+  }
+  details.transcript summary{
+    cursor:pointer;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--amber);
+    list-style:none;
+  }
+  details.transcript summary::-webkit-details-marker{display:none;}
+  details.transcript summary::before{
+    content:"▸ ";
+  }
+  details.transcript[open] summary::before{
+    content:"▾ ";
+  }
+  .transcript-body{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.86rem;
+    line-height:1.65;
+    color:#d8d5cb;
+    background:var(--bg-panel-2);
+    border:1px solid var(--line);
+    border-radius:2px;
+    padding:1.2rem 1.3rem;
+    margin-top:0.9rem;
+    white-space:pre-wrap;
+  }
+  .transcript-body strong{color:var(--amber);}
+
+  footer{
+    text-align:center;
+    padding:2rem 1.5rem 3rem;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.72rem;
+    color:#5c5a53;
+    letter-spacing:0.06em;
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="eyebrow">Live monitor · IPAWS-CAP feed</div>
+  <h1 class="title">GioTV <span>Emergency Alert</span> Repository</h1>
+  <div class="sub">An archive of past GioTV emergency alerts, indexed in broadcast order</div>
+</header>
+
+<main>
+  <div class="archive-label">
+    <span>Archived alerts</span>
+    <span>002 of 002</span>
+  </div>
+
+  <article class="alert-card storm" id="alert-002">
+    <div class="alert-head">
+      <div>
+        <div class="alert-num">FILE <b>No. 002</b> · ScreenRecording_07-26-2026_17-26-56_1.mov</div>
+        <h2 class="alert-title">Severe Thunderstorm Warning</h2>
+      </div>
+      <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+        <span class="badge muted">Failed Activation</span>
+        <span class="badge storm">NWS Warning</span>
+      </div>
+    </div>
+
+    <div class="status-note">⚠ Activation status: FAILED — this alert did not broadcast as intended.</div>
+
+    <dl class="meta-row">
+      <div>
+        <dt>Areas</dt>
+        <dd>Wabash, IL · Gibson, IN · White, IL · Posey, IN · Edwards, IL</dd>
+      </div>
+      <div>
+        <dt>Issued</dt>
+        <dd>6:13 PM, JUL 26 2026</dd>
+      </div>
+      <div>
+        <dt>Effective Until</dt>
+        <dd>7:13 PM, JUL 26 2026</dd>
+      </div>
+      <div>
+        <dt>Source</dt>
+        <dd>KPAH/NWS</dd>
+      </div>
+    </dl>
+
+    <div class="video-block">
+      <video controls preload="metadata" src="ScreenRecording_07-26-2026_17-26-56_1.mov"></video>
+      <div class="video-caption">Broadcast file: ScreenRecording_07-26-2026_17-26-56_1.mov</div>
+    </div>
+
+    <details class="transcript" open>
+      <summary>Full alert transcript</summary>
+      <div class="transcript-body">FAILED ACTIVATION
+
+The National Weather Service has issued A SEVERE THUNDERSTORM WARNING for the following counties/areas: Wabash, IL; Gibson, IN; White, IL; Posey, IN; Edwards, IL; at 6:13 PM on JUL 26, 2026. Effective until 7:13 PM.
+
+Message from KPAH/NWS.</div>
+    </details>
+  </article>
+
+  <article class="alert-card" id="alert-001">
+    <div class="alert-head">
+      <div>
+        <div class="alert-num">FILE <b>No. 001</b> · 1.mov</div>
+        <h2 class="alert-title">Child Abduction Emergency</h2>
+      </div>
+      <span class="badge">Amber Alert</span>
+    </div>
+
+    <dl class="meta-row">
+      <div>
+        <dt>Area</dt>
+        <dd>Kansas</dd>
+      </div>
+      <div>
+        <dt>Issued</dt>
+        <dd>1:37 PM, JUL 26 2026</dd>
+      </div>
+      <div>
+        <dt>Effective Until</dt>
+        <dd>1:37 PM, JUL 27 2026</dd>
+      </div>
+      <div>
+        <dt>Source</dt>
+        <dd>IPAWS-CAP</dd>
+      </div>
+    </dl>
+
+    <div class="video-block">
+      <video controls preload="metadata" src="1.mov"></video>
+      <div class="video-caption">Broadcast file: 1.mov — place this video file in the same folder as this page for it to play.</div>
+    </div>
+
+    <details class="transcript" open>
+      <summary>Full alert transcript</summary>
+      <div class="transcript-body">A civil authority has issued A CHILD ABDUCTION EMERGENCY for the following counties or areas: Kansas; at 1:37 PM on JUL 26, 2026. Effective until 1:37 PM JUL 27, 2026. Message from IPAWS-CAP.
+
+This is an Amber Alert: We have just received the following information from the Wichita Police Department, regarding a possible child abduction.
+
+<strong>VEHICLE</strong>
+Law Enforcement is looking for a 1998 white Dodge Ram 1500. License Tag 4-4-6-M-S-L. Vehicle has heavy front end damage from a recent accident.
+
+<strong>SUSPECT</strong>
+Saul Gonzales-Diaz, 21 year old hispanic male with brown eyes and black hair. Saul Gonzales-Diaz is 5'6", 165 lbs, last seen wearing a grey tank top, grey shorts, and black Nike Air Jordan tennis shoes. Saul has a beard and mustache.
+
+<strong>VICTIM</strong>
+Araceli Gonzales, 2 year old hispanic female with brown eyes and black hair. Araceli Gonzales is 2'6", 35 lbs, last seen wearing a pink dress with possibly a white flower pattern and pink Hello Kitty tennis shoes. Araceli has short, very curly hair and was last seen at 4240 E Boston, Wichita, KS.
+
+If you have any information on the location of Araceli Gonzales, please call 911 immediately. Other tips may be shared by calling the Wichita Police Department at 316-383-4661.
+
+We repeat: the suspect vehicle is a 1998 white Dodge Ram 1500. License Tag 4-4-6-M-S-L. Vehicle has heavy front end damage from a recent accident.</div>
+    </details>
+  </article>
+</main>
+
+<footer>
+  GioTV Emergency Alert Repository — archived for reference only. Not an active emergency feed.
+</footer>
+
+</body>
+</html>

@@ -66,6 +66,31 @@
     margin-top:0.9rem;
     letter-spacing:0.02em;
   }
+  .goto-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:0.5rem;
+    margin-top:1.4rem;
+    padding:0.6rem 1.2rem;
+    background:transparent;
+    border:1px solid var(--amber-dim);
+    color:var(--amber);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    text-decoration:none;
+    border-radius:2px;
+    transition:background .15s ease, border-color .15s ease, color .15s ease;
+  }
+  .goto-btn:hover{
+    background:var(--amber);
+    border-color:var(--amber);
+    color:#111;
+  }
+  .goto-btn::after{
+    content:"→";
+  }
 
 
   main{
@@ -255,6 +280,7 @@
   <div class="eyebrow">Live monitor · IPAWS-CAP feed</div>
   <h1 class="title">GioTV <span>Emergency Alert</span> Repository</h1>
   <div class="sub">An archive of past GioTV emergency alerts, indexed in broadcast order</div>
+  <a class="goto-btn" href="https://giotv-50o.pages.dev/guide">Go to GioTV</a>
 </header>
 
 <main>

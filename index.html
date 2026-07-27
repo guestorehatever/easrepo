@@ -130,6 +130,9 @@
   .alert-card.storm::before{
     background:#2f6f8a;
   }
+  .alert-card.admin::before{
+    background:var(--amber);
+  }
   .status-note{
     margin:0 1.7rem;
     margin-top:1rem;
@@ -286,8 +289,49 @@
 <main>
   <div class="archive-label">
     <span>Archived alerts</span>
-    <span>003 of 003</span>
+    <span>004 of 004</span>
   </div>
+
+  <article class="alert-card admin" id="alert-003">
+    <div class="alert-head">
+      <div>
+        <div class="alert-num">FILE <b>No. 003</b></div>
+        <h2 class="alert-title">Administrative Message</h2>
+      </div>
+      <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+        <span class="badge demo">No Action Required</span>
+        <span class="badge muted">Siren Test</span>
+      </div>
+    </div>
+
+    <dl class="meta-row">
+      <div>
+        <dt>Area</dt>
+        <dd>Sedgwick, KS</dd>
+      </div>
+      <div>
+        <dt>Issued</dt>
+        <dd>8:43 AM, JUL 27 2026</dd>
+      </div>
+      <div>
+        <dt>Effective Until</dt>
+        <dd>9:43 AM, JUL 27 2026</dd>
+      </div>
+      <div>
+        <dt>Source</dt>
+        <dd>IPAWS-CAP</dd>
+      </div>
+    </dl>
+
+    <div class="video-block">
+      <video controls preload="metadata" src="https://www.image2url.com/r2/default/videos/1785168520107-be86cdd6-2267-45f4-b893-0a36f46d1f13.mov"></video>
+    </div>
+
+    <details class="transcript" open>
+      <summary>Full alert transcript</summary>
+      <div class="transcript-body">A civil authority has issued AN ADMINISTRATIVE MESSAGE for the following counties or areas: Sedgwick, KS; at 8:43 AM on JUL 27, 2026 Effective until 9:43 AM. Message from IPAWSCAP. Sedgwick County Emergency Management will be testing the Outdoor Warning Sirens at Noon Today. Sedgwick County outdoor warning sirens are tested every Monday at Noon, except Holidays and when threatening weather is present. Today we will be testing the Alert mode, for one minute. The Alert Mode is a steady tone used for Tornado warning, The Attack Mode is a classic rise and fall sound used for Air Attack Warning in times of war. Outdoor warning sirens are designed to be an early warning device primarily for persons who are outside away from the television and or radio. Remember, when the outdoor warning sirens sound, Take cover, Tune in to local media, Take action. Emergency Management officials highly recommend citizens keep a NOAA weather radio in their homes, preferably in the bedroom, with a tone alert for those times when you are not monitoring public media. This broadcast originates from Sedgwick County Emergency Management located at seven fourteen North Main, Wichita Kansas. WPMQ three ninety one. No action required test only.</div>
+    </details>
+  </article>
 
   <article class="alert-card storm" id="alert-002">
     <div class="alert-head">
